@@ -3,7 +3,7 @@ import re
 from django import forms
 from .forms import HTMLField
 from .widgets import HTMLFieldWidget
-from webapp.models.dynamic_options import DynamicOption
+from webapp.models.optionset_models import TeamOptionset
 
 def _process_checkbox(field_json):
     field = forms.MultipleChoiceField()
@@ -119,8 +119,8 @@ def process_field_from_json(field_json):
         is_dynamic_options = (requested_optionset > 0)
 
         if is_dynamic_options:
-            json_choices = DynamicOption.objects.get(
-                            pk=requested_optionset).options_set
+            json_choices = TeamOptionset.objects.get(
+                            pk=requested_optionset).options
         else:
             json_choices = field_json['values']
         
