@@ -1,3 +1,10 @@
+# Static-Specifics
+We want to keep our fork tightly in sync with upstream and contribute
+the fixes we can share. We also need a place for our domain code. To do this:
+1. `main` is what we use in our app
+2. `master` is kept in sync with upstream and rebased into `main` 
+
+
 # Dynamic Django Forms
 
 **dynamic-django-forms** is a simple, reusable app that allows you to build (and respond to) dynamic forms, i.e. forms that have variable numbers and types of fields. A few examples of uses include:
