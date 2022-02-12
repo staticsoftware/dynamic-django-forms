@@ -1,7 +1,9 @@
+import json
+import re
 from django import forms
 from .forms import HTMLField
 from .widgets import HTMLFieldWidget
-
+from webapp.models.optionset_models import TeamOptionset
 
 def _process_checkbox(field_json):
     field = forms.MultipleChoiceField()
@@ -112,8 +114,18 @@ def process_field_from_json(field_json):
         for attr, val in common_widget_attrs.items():
             field.widget.attrs[attr] = val
     if field_type in ['checkbox-group', 'radio-group', 'select']:
+        requested_optionset = int(field_json.get("optionset", 0))
+
+        is_dynamic_options = (requested_optionset > 0)
+
+        if is_dynamic_options:
+            json_choices = TeamOptionset.objects.get(
+                            pk=requested_optionset).options
+        else:
+            json_choices = field_json['values']
+        
         choices = [
-            (choice['value'], choice['label']) for choice in field_json['values']
+            (choice['value'], choice['label']) for choice in json_choices
         ]
         field.choices = choices
         field.widget.choices = choices
