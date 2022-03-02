@@ -24,7 +24,7 @@ def _process_email(field_json):
 def _process_hidden(field_json):
     field = forms.CharField()
     field.widget = forms.HiddenInput()
-
+    return field
 
 def _process_number(field_json):
     return forms.FloatField(
@@ -123,7 +123,7 @@ def process_field_from_json(field_json):
                             pk=requested_optionset).options
         else:
             json_choices = field_json['values']
-        
+
         choices = [
             (choice['value'], choice['label']) for choice in json_choices
         ]
